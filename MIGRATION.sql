@@ -38,3 +38,33 @@ CREATE TABLE tb_users(
      password VARCHAR(300) NOT NULL,
      role VARCHAR(6) NOT NULL
 );
+
+CREATE TABLE tb_address (
+    id BIGSERIAL PRIMARY KEY,
+    zip_code VARCHAR(8) NOT NULL,
+    street VARCHAR(255) NOT NULL,
+    complement VARCHAR(255),
+    neighborhood VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    state VARCHAR(255) NOT NULL,
+    user_id BIGSERIAL,
+    FOREIGN KEY (user_id) REFERENCES tb_users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE tb_orders (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGSERIAL NOT NULL,
+    delivery_address BIGSERIAL NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES tb_user(id) ON DELETE CASCADE,
+    FOREIGN KEY (delivery_address) REFERENCES tb_address(id) ON DELETE CASCADE
+);
+
+CREATE TABLE tb_order_product (
+    order_id BIGSERIAL NOT NULL,
+    product_id BIGSERIAL NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES tb_orders(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES tb_products(id) ON DELETE CASCADE,
+    PRIMARY KEY (order_id, product_id)
+    
+);
