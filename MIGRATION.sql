@@ -15,6 +15,13 @@ CREATE TABLE tb_products(
     FOREIGN KEY (manufacturer_id) REFERENCES tb_manufacturer(id) ON DELETE CASCADE
 );
 
+CREATE TABLE tb_stock(
+    product_id BIGSERIAL NOT NULL,
+    quantity BIGSERIAL NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES tb_products(id) ON DELETE CASCADE,
+    PRIMARY KEY (product_id)
+);
+
 CREATE TABLE tb_categories(
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(100)
@@ -39,7 +46,7 @@ CREATE TABLE tb_users(
      role VARCHAR(6) NOT NULL
 );
 
-CREATE TABLE tb_address (
+CREATE TABLE tb_address(
     id BIGSERIAL PRIMARY KEY,
     zip_code VARCHAR(8) NOT NULL,
     street VARCHAR(255) NOT NULL,
@@ -51,7 +58,7 @@ CREATE TABLE tb_address (
     FOREIGN KEY (user_id) REFERENCES tb_users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE tb_orders (
+CREATE TABLE tb_orders(
     id BIGSERIAL PRIMARY KEY,
     user_id BIGSERIAL NOT NULL,
     delivery_address BIGSERIAL NOT NULL,
@@ -60,11 +67,10 @@ CREATE TABLE tb_orders (
     FOREIGN KEY (delivery_address) REFERENCES tb_address(id) ON DELETE CASCADE
 );
 
-CREATE TABLE tb_order_product (
+CREATE TABLE tb_order_product(
     order_id BIGSERIAL NOT NULL,
     product_id BIGSERIAL NOT NULL,
     FOREIGN KEY (order_id) REFERENCES tb_orders(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES tb_products(id) ON DELETE CASCADE,
     PRIMARY KEY (order_id, product_id)
-    
 );
