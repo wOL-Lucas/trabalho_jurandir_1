@@ -71,6 +71,6 @@ CREATE TABLE tb_order_product(
     order_id BIGINT NOT NULL,
     product_id BIGINT NOT NULL,
     FOREIGN KEY (order_id) REFERENCES tb_orders(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES tb_products(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES tb_stock(id) ON DELETE CASCADE,
     PRIMARY KEY (order_id, product_id)
 );
